@@ -23,7 +23,7 @@ export class MovimentoManualComponent implements OnInit {
     codClasificacao: string,
   }];
   constructor(
-    private  formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private readonly produtoService: ProdutoService,
     private readonly movimentoService: MovimentoService,
   ) { }
@@ -95,7 +95,11 @@ export class MovimentoManualComponent implements OnInit {
     const movManual: MovimentoManual = this.formGrp.getRawValue();
     movManual.numLancamento = this.proxLancamento + 1;
     this.movimentoService.insertMovimentoManual(movManual).subscribe(
-      (list) => { },
+      (list) => {
+        this.limpar();
+        this.disable();
+        this.getMovimentos();
+      },
       (error: any) => { this.mensagem = 'Não foi possivel obter os movimentos.'; }
     );
   }
