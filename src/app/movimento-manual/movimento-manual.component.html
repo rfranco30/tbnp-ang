@@ -1,0 +1,88 @@
+<form [formGroup]="formGrp">
+    <div class="content" role="main">
+        <h1>Movimentos Manuais</h1>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Movimento
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Mês</mat-label>
+                <input matInput formControlName="datMes" type="number"  >
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Ano</mat-label>
+                <input matInput formControlName="datAno" type="number" maxlength="4">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Produto</mat-label>
+                <mat-select formControlName="codProduto" [disabled]="edit"  (selectionChange)="onSelectProduto($event)">
+                    <mat-option value="">Selecione</mat-option>
+                    <mat-option *ngFor="let produto of produtos" [value]="produto.codProduto">
+                        {{produto.descProduto}}
+                      </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Cofis</mat-label>
+                <mat-select formControlName="codCosif" [disabled]="edit">
+                    <mat-option value="">Selecione</mat-option>
+                    <mat-option *ngFor="let cofis of listCofis" [value]="cofis.codCofis">
+                        {{cofis.codCofis}}
+                      </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Valor</mat-label>
+                <input matInput currencyMask formControlName="valValor"
+                    [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" />
+
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" style="width: 50%;">
+                <mat-label>Descrição</mat-label>
+                <textarea matInput formControlName="desDescricao" maxlength="50"></textarea>
+            </mat-form-field>
+            <div class="button-row" style="width: 100%;">
+
+
+                <button type="submit" mat-raised-button (click)="onSubmit()">Incluir</button>
+                <button mat-raised-button (click)="enable()">Novo</button>
+                <button mat-raised-button (click)="limpar()">Limpar</button>
+            </div>
+        </mat-expansion-panel>
+
+        <br><br>
+        <div style="width: 100%; margin-top: 10px;">
+            <h3>Lista</h3>
+            <table>
+                <tr>
+                    <th>Mês</th>
+                    <th>Ano</th>
+                    <th>Código do Produto</th>
+                    <th>Descrição do Produto</th>
+                    <th>NR Lançamento</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                </tr>
+                <tr *ngFor="let mov of movimentos">
+                    <td>{{mov.datMes}}</td>
+                    <td>{{mov.datAno}}</td>
+                    <td>{{mov.codProduto}}</td>
+                    <td>{{mov.desProduto}}</td>
+                    <td>{{mov.numLancament}}</td>
+                    <td>{{mov.desDescricao}}</td>
+                    <td>{{mov.valValor}}</td>
+                    
+                </tr>
+            </table>
+        </div>
+        <br><br>
+    </div>
+</form>
