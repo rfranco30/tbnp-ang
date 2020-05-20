@@ -12,18 +12,18 @@ import { MovimentoManual } from '../core/shared/model/movimento-manual';
   styleUrls: ['./movimento-manual.component.scss']
 })
 export class MovimentoManualComponent implements OnInit {
-  private formGrp: FormGroup;
-  private edit = true;
-  private produtos: Array<Produto> = [];
-  private movimentos: Array<Movimento> = [];
-  private mensagem: string;
-  private proxLancamento: number;
-  private listCofis: [{
+  public formGrp: FormGroup;
+  public edit = true;
+  public produtos: Array<Produto> = [];
+  public movimentos: Array<Movimento> = [];
+  public mensagem: string;
+  public proxLancamento: number;
+  public listCofis: [{
     codCofis: string,
     codClasificacao: string,
   }];
   constructor(
-    private formBuilder: FormBuilder,
+    private  formBuilder: FormBuilder,
     private readonly produtoService: ProdutoService,
     private readonly movimentoService: MovimentoService,
   ) { }
@@ -44,45 +44,45 @@ export class MovimentoManualComponent implements OnInit {
     this.getProxLancamento();
   }
 
-  private getProxLancamento() {
+  public getProxLancamento() {
     this.movimentoService.getProxLancamento().subscribe(
       (list) => { this.proxLancamento = list; },
       (error: any) => { this.mensagem = 'Não foi possivel obter os movimentos.'; }
     );
   }
 
-  private getMovimentos() {
+  public getMovimentos() {
     this.movimentoService.getMovimentos().subscribe(
       (list) => { this.movimentos = list; },
       (error: any) => { this.mensagem = 'Não foi possivel obter os movimentos.'; }
     );
   }
-  private getProdutos() {
+  public getProdutos() {
     this.produtoService.getProdutos().subscribe(
       (list) => { this.produtos = list; },
       (error: any) => { this.mensagem = 'Não foi possivel obter os produtos.'; }
     );
   }
 
-  private onSelectProduto(option) {
+  public onSelectProduto(option) {
     let produto = this.produtos.find(p => p.codProduto === option.value);
     this.listCofis = produto.cofisList;
   }
 
-  private disable() {
+  public disable() {
     this.formGrp.controls['datMes'].disable();
     this.formGrp.controls['datAno'].disable();
     this.formGrp.controls['valValor'].disable();
     this.formGrp.controls['desDescricao'].disable();
   }
-  private enable() {
+  public enable() {
     this.edit = !this.edit;
     this.formGrp.controls['datMes'].enable();
     this.formGrp.controls['datAno'].enable();
     this.formGrp.controls['valValor'].enable();
     this.formGrp.controls['desDescricao'].enable();
   }
-  private limpar() {
+  public limpar() {
     this.formGrp.controls['datMes'].setValue('');
     this.formGrp.controls['datAno'].setValue('');
     this.formGrp.controls['valValor'].setValue('');
@@ -91,7 +91,7 @@ export class MovimentoManualComponent implements OnInit {
     this.formGrp.controls['codCosif'].setValue('');
   }
 
-  private onSubmit() {
+  public onSubmit() {
     const movManual: MovimentoManual = this.formGrp.getRawValue();
     movManual.numLancamento = this.proxLancamento + 1;
     this.movimentoService.insertMovimentoManual(movManual).subscribe(
